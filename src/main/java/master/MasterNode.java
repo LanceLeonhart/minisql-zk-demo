@@ -8,6 +8,7 @@ import util.ZkUtils;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.ServerSocket;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +39,19 @@ public class MasterNode {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 byte[] buf = clientSocket.getInputStream().readNBytes(1024);
-                String query = new String(buf).trim();
+                String query = new String(buf, StandardCharsets.UTF_8).trim();
                 System.out.println("[Master] Received from client: " + query);
 
                 if (!regionMap.isEmpty()) {
-                    String addr = regionMap.values().iterator().next();
+                    int hash = Math.abs(query.hashCode());
+                    int regionIndex = hash % regionMap.size();
+                    String regionName = regionMap.keySet().stream().sorted().toList().get(regionIndex);
+                    String addr = regionMap.get(regionName);
+
                     String[] parts = addr.split(":");
                     Socket regionSocket = new Socket(parts[0], Integer.parseInt(parts[1]));
                     OutputStream out = regionSocket.getOutputStream();
-                    out.write(query.getBytes());
+                    out.write(query.getBytes(StandardCharsets.UTF_8));
                     out.flush();
                     regionSocket.close();
                 }

@@ -12,6 +12,7 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Client SQL> ");
+            // 使用交互式命令行来读取用户输入
             String line = scanner.nextLine();
             if (line.trim().equalsIgnoreCase("exit")) break;
 

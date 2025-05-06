@@ -9,24 +9,29 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class RegionServer {
-    private static final String REGION_NAME = "region1";
-    private static final int PORT = 9001;
-
     public static void main(String[] args) throws Exception {
+        if (args.length < 2) {
+            System.err.println("Usage: java RegionServer <regionName> <port>");
+            System.exit(1);
+        }
+
+        String regionName = args[0];
+        int port = Integer.parseInt(args[1]);
+
         CuratorFramework zkClient = ZkUtils.createZkClient();
-        String path = "/regions/" + REGION_NAME;
+        String path = "/regions/" + regionName;
         if (zkClient.checkExists().forPath(path) == null) {
-            zkClient.create().creatingParentsIfNeeded().forPath(path, ("localhost:" + PORT).getBytes());
+            zkClient.create().creatingParentsIfNeeded().forPath(path, ("localhost:" + port).getBytes());
             System.out.println("[RegionServer] Registered at " + path);
         }
 
-        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
-            System.out.println("[RegionServer] Listening on port " + PORT);
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("[RegionServer] Listening on port " + port);
             while (true) {
                 Socket socket = serverSocket.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 String input = in.readLine();
-                System.out.println("[RegionServer] Received: " + input);
+                System.out.println("[" + regionName + "] Received: " + input);
                 socket.close();
             }
         }
