@@ -1,6 +1,6 @@
 package client;
 
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -12,14 +12,17 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Client SQL> ");
-            // 使用交互式命令行来读取用户输入
             String line = scanner.nextLine();
             if (line.trim().equalsIgnoreCase("exit")) break;
 
             Socket socket = new Socket(MASTER_HOST, MASTER_PORT);
-            OutputStream out = socket.getOutputStream();
-            out.write(line.getBytes());
-            out.flush();
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            out.println(line); // 发送 SQL
+            String response = in.readLine(); // 接收响应
+            System.out.println("[Client] Got response: " + response);
+
             socket.close();
         }
     }

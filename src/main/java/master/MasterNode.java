@@ -5,13 +5,11 @@ import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
 import util.ZkUtils;
 
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MasterNode {
     private static final int PORT = 8888;
@@ -38,11 +36,13 @@ public class MasterNode {
             System.out.println("[Master] Listening on port " + PORT);
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                byte[] buf = clientSocket.getInputStream().readNBytes(1024);
-                String query = new String(buf, StandardCharsets.UTF_8).trim();
+                BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+                String query = clientIn.readLine();
                 System.out.println("[Master] Received from client: " + query);
 
                 if (!regionMap.isEmpty()) {
+                    // hash to pick region
                     int hash = Math.abs(query.hashCode());
                     int regionIndex = hash % regionMap.size();
                     String regionName = regionMap.keySet().stream().sorted().toList().get(regionIndex);
@@ -50,10 +50,17 @@ public class MasterNode {
 
                     String[] parts = addr.split(":");
                     Socket regionSocket = new Socket(parts[0], Integer.parseInt(parts[1]));
-                    OutputStream out = regionSocket.getOutputStream();
-                    out.write(query.getBytes(StandardCharsets.UTF_8));
-                    out.flush();
+                    PrintWriter regionOut = new PrintWriter(regionSocket.getOutputStream(), true);
+                    BufferedReader regionIn = new BufferedReader(new InputStreamReader(regionSocket.getInputStream()));
+
+                    regionOut.println(query);
+                    String response = regionIn.readLine(); // 读取 region 返回结果
+
+                    clientOut.println(response); // 转发给 client
+
                     regionSocket.close();
+                } else {
+                    clientOut.println("[Master] No region available.");
                 }
                 clientSocket.close();
             }
