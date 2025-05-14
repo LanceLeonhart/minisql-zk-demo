@@ -27,6 +27,8 @@ public class TableManager {
 
     /** 列出所有表名 */
     public static Set<String> listTables() {
-        return Collections.unmodifiableSet(tables.keySet());
+        // 返回一个新的 HashSet 副本，修改原表不会影响这里的迭代
+        return new HashSet<>(tables.keySet());
     }
+
 }
