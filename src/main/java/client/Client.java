@@ -15,15 +15,23 @@ public class Client {
             String line = scanner.nextLine();
             if (line.trim().equalsIgnoreCase("exit")) break;
 
-            Socket socket = new Socket(MASTER_HOST, MASTER_PORT);
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            try (Socket socket = new Socket(MASTER_HOST, MASTER_PORT);
+                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            out.println(line); // 发送 SQL
-            String response = in.readLine(); // 接收响应
-            System.out.println("[Client] Got response: " + response);
+                out.println(line); // 发送 SQL
 
-            socket.close();
+                // 循环读取所有行，直到对端关闭
+                StringBuilder sb = new StringBuilder();
+                String respLine;
+                while ((respLine = in.readLine()) != null) {
+                    sb.append(respLine).append(System.lineSeparator());
+                }
+
+                System.out.println("[Client] Got response:\n" + sb.toString().trim());
+            } catch (IOException e) {
+                System.err.println("Error communicating with master: " + e.getMessage());
+            }
         }
     }
 }

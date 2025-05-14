@@ -3,6 +3,7 @@ package region;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
 import util.ZkUtils;
+import minisql.SimpleSQLExecutor;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -35,11 +36,10 @@ public class RegionServer {
             while (true) {
                 Socket socket = serverSocket.accept();
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                String input = in.readLine();
-                System.out.println("[" + regionName + "] Received: " + input);
+                String sql = in.readLine();
+                System.out.println("[" + regionName + "] Received: " + sql);
 
-                // 返回固定响应（可扩展）
-                String result = "[Result from " + regionName + "] OK: " + input;
+                String result = SimpleSQLExecutor.execute(sql);
 
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
                 out.println(result);
