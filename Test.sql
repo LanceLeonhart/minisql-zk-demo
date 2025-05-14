@@ -1,0 +1,22 @@
+DROP TABLE users;
+CREATE TABLE users (id INT, age INT, name TEXT, email TEXT, score INT, PRIMARY KEY(id));
+INSERT INTO users (id, age, name, email, score) VALUES (1,20,'Alice','alice@example.com',85);
+INSERT INTO users (id, age, name, email, score) VALUES (2,22,'Bob','bob@example.com',92);
+INSERT INTO users (id, age, name, email, score) VALUES (3,19,'Carol','carol@example.com',78);
+INSERT INTO users (id, age, name, email, score) VALUES (4,23,'Dave','dave@example.com',88);
+INSERT INTO users (id, age, name, email, score) VALUES (5,21,'Eve','eve@example.com',91);
+INSERT INTO users (id, age, name, email, score) VALUES (6,20,'Frank','frank@example.com',75);
+INSERT INTO users (id, age, name, email, score) VALUES (7,24,'Grace','grace@example.com',98);
+INSERT INTO users (id, age, name, email, score) VALUES (8,22,'Heidi','heidi@example.com',89);
+INSERT INTO users (id, age, name, email, score) VALUES (9,19,'Ivan','ivan@example.com',82);
+INSERT INTO users (id, age, name, email, score) VALUES (10,23,'Judy','judy@example.com',95);
+SELECT * FROM users;
+SELECT * FROM users WHERE id = 7;
+SELECT * FROM users WHERE id = 10;
+UPDATE users SET score = 100 WHERE id = 4;
+SELECT * FROM users WHERE id = 4;
+DELETE FROM users WHERE id = 2;
+DELETE FROM users WHERE id = 9;
+SELECT * FROM users;
+DROP TABLE users;
+exit

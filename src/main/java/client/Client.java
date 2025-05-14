@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+// java -cp target/classes client.Client < Test.sql > run.log
+
 public class Client {
     private static final String MASTER_HOST = "localhost";
     private static final int MASTER_PORT = 8888;

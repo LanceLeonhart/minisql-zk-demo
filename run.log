@@ -1,0 +1,65 @@
+Client SQL> [Client] Got response:
+[region1] Table not found: users
+[region2] Table not found: users
+[region3] Table not found: users
+Client SQL> [Client] Got response:
+[region1] Table created: users
+[region2] Table created: users
+[region3] Table created: users
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+OK
+Client SQL> [Client] Got response:
+[region1] {id=3, age=19, name=Carol, email=carol@example.com, score=78}
+[region1] {id=6, age=20, name=Frank, email=frank@example.com, score=75}
+[region1] {id=9, age=19, name=Ivan, email=ivan@example.com, score=82}
+[region2] {id=1, age=20, name=Alice, email=alice@example.com, score=85}
+[region2] {id=4, age=23, name=Dave, email=dave@example.com, score=88}
+[region2] {id=7, age=24, name=Grace, email=grace@example.com, score=98}
+[region2] {id=10, age=23, name=Judy, email=judy@example.com, score=95}
+[region3] {id=2, age=22, name=Bob, email=bob@example.com, score=92}
+[region3] {id=5, age=21, name=Eve, email=eve@example.com, score=91}
+[region3] {id=8, age=22, name=Heidi, email=heidi@example.com, score=89}
+Client SQL> [Client] Got response:
+{id=7, age=24, name=Grace, email=grace@example.com, score=98}
+Client SQL> [Client] Got response:
+{id=10, age=23, name=Judy, email=judy@example.com, score=95}
+Client SQL> [Client] Got response:
+Updated rows: 1
+Client SQL> [Client] Got response:
+{id=4, age=23, name=Dave, email=dave@example.com, score=100}
+Client SQL> [Client] Got response:
+Deleted rows: 1
+Client SQL> [Client] Got response:
+Deleted rows: 1
+Client SQL> [Client] Got response:
+[region1] {id=3, age=19, name=Carol, email=carol@example.com, score=78}
+[region1] {id=6, age=20, name=Frank, email=frank@example.com, score=75}
+[region2] {id=1, age=20, name=Alice, email=alice@example.com, score=85}
+[region2] {id=4, age=23, name=Dave, email=dave@example.com, score=100}
+[region2] {id=7, age=24, name=Grace, email=grace@example.com, score=98}
+[region2] {id=10, age=23, name=Judy, email=judy@example.com, score=95}
+[region3] {id=5, age=21, name=Eve, email=eve@example.com, score=91}
+[region3] {id=8, age=22, name=Heidi, email=heidi@example.com, score=89}
+Client SQL> [Client] Got response:
+[region1] Table dropped: users
+[region2] Table dropped: users
+[region3] Table dropped: users
+Client SQL> 
