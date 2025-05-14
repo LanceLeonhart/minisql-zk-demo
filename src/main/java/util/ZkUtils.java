@@ -6,7 +6,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 
 public class ZkUtils {
     private static final String ZK_ADDRESS = "localhost:2181";  // ZooKeeper 默认的服务地址和端口
-    private static final int SESSION_TIMEOUT = 5000;
+    private static final int SESSION_TIMEOUT = 15000;
 
     public static CuratorFramework createZkClient() {
         //获得并返回一个zookeeper的客户端对象

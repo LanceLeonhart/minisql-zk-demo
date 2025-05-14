@@ -1,0 +1,16 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 设置全局日志级别为 WARN（关闭大多数 DEBUG 信息） -->
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!-- 可为 Curator、ZK 设置具体级别 -->
+    <logger name="org.apache.curator" level="WARN"/>
+    <logger name="org.apache.zookeeper" level="WARN"/>
+</configuration>

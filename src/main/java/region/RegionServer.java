@@ -1,6 +1,7 @@
 package region;
 
 import org.apache.curator.framework.CuratorFramework;
+import org.apache.zookeeper.CreateMode;
 import util.ZkUtils;
 
 import java.io.*;
@@ -21,7 +22,11 @@ public class RegionServer {
         CuratorFramework zkClient = ZkUtils.createZkClient();
         String path = "/regions/" + regionName;
         if (zkClient.checkExists().forPath(path) == null) {
-            zkClient.create().creatingParentsIfNeeded().forPath(path, ("localhost:" + port).getBytes());
+            zkClient.create()
+                    .creatingParentsIfNeeded()
+                    .withMode(CreateMode.EPHEMERAL)
+                    .forPath(path, ("localhost:" + port).getBytes());
+
             System.out.println("[RegionServer] Registered at " + path);
         }
 
