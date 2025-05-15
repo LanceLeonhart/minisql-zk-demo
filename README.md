@@ -1,5 +1,4 @@
-# Generate the README.md file
-content = """# 基于 ZooKeeper 的分布式 MiniSQL
+# 基于 ZooKeeper 的分布式 MiniSQL 系统
 
 ## 项目简介  
 本项目为单人实现的简化版分布式 MiniSQL 系统，利用 ZooKeeper（Curator）负责集群管理与路由调度，支持基本的 SQL 操作。
