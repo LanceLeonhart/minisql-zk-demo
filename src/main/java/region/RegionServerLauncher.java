@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * 新版 RegionServerLauncher：
+ *  RegionServerLauncher：
  *  - 每个 RegionServer 都启动在独立的 JVM (Process)
  *  - 支持输入 exit/list/help 等命令
  *  - 在 JVM 关闭时自动销毁所有子进程
